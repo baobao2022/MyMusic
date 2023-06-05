@@ -130,6 +130,29 @@ header h2 {
   background-color: var(--primary-color);
   cursor: pointer;
 }
+.progress-volum{
+  width: 150px;
+}
+.btn-volum{
+  display: flex;
+  stroke: #333;
+  cursor: pointer;
+  width: 56px;
+  height: 56px;
+  font-size: 24px;
+  align-items: center;
+  justify-content: center;
+
+}
+.fa-volume{
+  color:black;
+  font-weight: 900;
+}
+.volum{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
 
 /* PLAYLIST */
 .playlist {

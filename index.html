@@ -10,9 +10,10 @@
 <body>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Music player</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="  " rel="stylesheet">
 
 <div class="player">
   <!-- Dashboard -->
@@ -52,6 +53,14 @@
     <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
 
     <audio id="audio" src=""></audio>
+    <div class="volum">
+      <div class="btn btn-volum">
+        <i class="fa-solid fa-volume-high"></i>
+        <!-- <i class="fa-solid fa-volume-xmark"></i> -->
+      </div>
+      <div> <input id="progress-volume" class="progress-volum" type="range" value="100" step="1" min="0" max="100"></div>
+     
+    </div>
   </div>
 
   <!-- Playlist -->
@@ -104,10 +113,15 @@ const playBtn=$('.btn-toggle-play')
 const player=$('.player')
 const repeat=$('.btn-repeat')
 const progress=$('#progress')
+const progressvolum=$('#progress-volume')
 const nextBtn=$('.btn-next')
 const preBtn=$('.btn-prev')
 const randomBtn=$('.btn-random')
 const playlist=$('.playlist')
+const vulumBtn=$('.volum')
+const muteBtn=$('.btn-volum')
+const unMuteBtn=$('.fa-volume-high')
+const openMuteByn=$('.fa-volume-xmark')
 const PLAYER_STORAGE_KEY='F8-PLAYER'
 
 const app={
@@ -115,6 +129,7 @@ const app={
   isPlaying:false,
   isRandom:false,
   isRepeat:false,
+  isMute:false,
   config:JSON.parse(localStorage.getItem(PLAYER_STORAGE_KEY)) || {},
 songs:[
   {
@@ -206,7 +221,7 @@ render:function()
 //// play và pause
     playBtn.onclick=function(){
       if (_this.isPlaying){
-        audio.pause()
+        audio.pause() 
       }
       else{
         audio.play()
@@ -258,6 +273,26 @@ render:function()
         _this.setConfig('isRandom',_this.isRandom)
         randomBtn.classList.toggle('active',_this.isRandom)
       
+    }
+    
+    //nút tắt tiếng mute
+    muteBtn.onclick=function(){
+      _this.isMute =! _this.isMute
+      if(_this.isMute){
+        audio.muted = true
+        unMuteBtn.classList.toggle('fa-volume-xmark')}
+        else{
+          audio.muted = false
+          unMuteBtn.classList.remove('fa-volume-xmark')
+        }
+    }
+    //volum progress
+    vulumBtn.onchange=function(){
+      audio.volume=1
+      const progressPercentvolum=progressvolum.value/100*audio.volume
+      console.log(progressPercentvolum)
+      audio.volume=progressPercentvolum
+
     }
     // thanh điều khiển current time
    audio.ontimeupdate=function(){
